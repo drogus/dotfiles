@@ -2,3 +2,8 @@
 .svn
 *~
 .*.swp
+.idea
+.rvmrc
+.*.swo
+*#
+.#*
