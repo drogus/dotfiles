@@ -1,0 +1,66 @@
+set nocompatible                " choose no compatibility with legacy vi
+syntax enable
+set encoding=utf-8
+set showcmd                     " display incomplete commands
+
+filetype off                   " required!
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+Bundle 'gmarik/vundle'
+Bundle "vim-ruby/vim-ruby"
+Bundle 'tpope/vim-rails'
+Bundle 'wincent/Command-T'
+Bundle 'sjbach/lusty'
+
+filetype plugin indent on       " load file type plugins + indentation
+
+set hidden " For lusty explorer
+
+"" Whitespace
+set nowrap                      " don't wrap lines
+set tabstop=2 shiftwidth=2      " a tab is two spaces (or set this to 4)
+set expandtab                   " use spaces, not tabs (optional)
+set backspace=indent,eol,start  " backspace through everything in insert mode
+set list                        " Show invisible characters
+
+" List chars
+set listchars=""                  " Reset the listchars
+set listchars=tab:\ \             " a tab should display as "  ", trailing whitespace as "."
+set listchars+=trail:.            " show trailing spaces as dots
+set listchars+=extends:>          " The character to show in the last column when wrap is
+                                  " off and the line continues beyond the right of the screen
+set listchars+=precedes:<         " The character to show in the last column when wrap is
+                                  " off and the line continues beyond the right of the screen
+
+"" Searching
+set hlsearch                    " highlight matches
+set incsearch                   " incremental searching
+set ignorecase                  " searches are case insensitive...
+set smartcase                   " ... unless they contain at least one capital letter
+
+set number
+set ruler
+
+" Disable bell
+set vb
+
+let mapleader = ","
+
+" Command-T config
+nnoremap <leader>t :CommandT<CR>
+nnoremap <leader>b :LustyBufferExplorer<CR>
+nnoremap <leader>lb :LustyBufferGrep<CR>
+
+colorscheme molokai
+
+" Toggle paste mode
+nmap <silent> <F4> :set invpaste<CR>:set paste?<CR>
+imap <silent> <F4> <ESC>:set invpaste<CR>:set paste?<CR>
+
+" Next buffer
+nmap <silent> ,. :bnext<CR>
+
+" Previous buffer
+nmap <silent> ,m :bprev<CR>
