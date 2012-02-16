@@ -13,6 +13,7 @@ Bundle "vim-ruby/vim-ruby"
 Bundle 'tpope/vim-rails'
 Bundle 'wincent/Command-T'
 Bundle 'sjbach/lusty'
+Bundle 'tpope/vim-fugitive'
 
 filetype plugin indent on       " load file type plugins + indentation
 
