@@ -44,6 +44,8 @@ set smartcase                   " ... unless they contain at least one capital l
 " cancel highlight with space
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 
+inoremap jk <Left><C-[> 
+
 set number
 set ruler
 
