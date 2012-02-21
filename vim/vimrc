@@ -15,6 +15,7 @@ Bundle 'wincent/Command-T'
 Bundle 'sjbach/lusty'
 Bundle 'tpope/vim-fugitive'
 Bundle 'kchmck/vim-coffee-script'
+Bundle 'scrooloose/nerdcommenter'
 
 filetype plugin indent on       " load file type plugins + indentation
 
@@ -41,6 +42,10 @@ set hlsearch                    " highlight matches
 set incsearch                   " incremental searching
 set ignorecase                  " searches are case insensitive...
 set smartcase                   " ... unless they contain at least one capital letter
+
+"" Commenting
+"" base comments are from nerd commenter
+""command! -nargs=? -range=% Ct :<line1>,<line2> ????
 
 " cancel highlight with space
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
