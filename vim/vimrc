@@ -45,7 +45,16 @@ set smartcase                   " ... unless they contain at least one capital l
 
 "" Commenting
 "" base comments are from nerd commenter
-""command! -nargs=? -range=% Ct :<line1>,<line2> ????
+command! -nargs=? -range=% Cc :normal <line1>ggv<line2>gg<Leader>cc
+command! -nargs=? -range=% Cn :normal <line1>ggv<line2>gg<Leader>cn
+command! -nargs=? -range=% Ct :normal <line1>ggv<line2>gg<Leader>c<space>
+command! -nargs=? -range=% Cm :normal <line1>ggv<line2>gg<Leader>cm
+command! -nargs=? -range=% Ci :normal <line1>ggv<line2>gg<Leader>ci
+command! -nargs=? -range=% Cs :normal <line1>ggv<line2>gg<Leader>cs
+command! -nargs=? -range=% Cy :normal <line1>ggv<line2>gg<Leader>cy
+command! -nargs=? -range=% Cl :normal <line1>ggv<line2>gg<Leader>cl
+command! -nargs=? -range=% Cb :normal <line1>ggv<line2>gg<Leader>cb
+command! -nargs=? -range=% Cu :normal <line1>ggv<line2>gg<Leader>cu
 
 " cancel highlight with space
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>

@@ -33,8 +33,14 @@
   ,ca Switches to the alternative set of delimiters.
   [n],cl
   [n],cb Same as ,cc except that the delimiters are aligned down the
-  left side (|<Leader>|cl) or both sides (|<Leader>|cb).
+         left side (,cl) or both sides (,cb).
   [n],cu Uncomments the selected line(s).
+
+Nerd Commenter based commands, which accepts ranges. No range means whole file.
+
+  :Ct = ,c<space>
+  Rest is adequate:
+  :Cc, :Cn, :Cm, :Ci, :Cs, :Cy, :Cl, :Cb, :Cu
 
 
 = Original Ryan's readme
