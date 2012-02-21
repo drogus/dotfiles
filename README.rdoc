@@ -21,15 +21,15 @@
   [n],cc Comment out the current line or text selected in visual mode.
   [n],cn Same as ,cc but forces nesting.
   [n],c<space> Toggles the comment state of the selected line(s). 
-  If the topmost selected line is commented, all selected lines are uncommented
-  and vice versa.
+               If the topmost selected line is commented, all selected lines 
+               are uncommented and vice versa.
   [n],cm Comments the given lines using only one set of multipart delimiters.
   [n],ci Toggles the comment state of the selected line(s) individually.
   [n],cs Comments out the selected lines 'sexily'
   [n],cy Same as ,cc except that the commented line(s) are yanked first.
   ,c$ Comments the current line from the cursor to the end of line.
   ,cA Adds comment delimiters to the end of line and goes into insert mode
-  between them.
+      between them.
   ,ca Switches to the alternative set of delimiters.
   [n],cl
   [n],cb Same as ,cc except that the delimiters are aligned down the
