@@ -58,6 +58,7 @@ highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 let mapleader = ","
 
 " Command-T config
+let g:CommandTMaxFiles=20000
 nnoremap <leader>t :CommandT<CR>
 nnoremap <leader>b :LustyBufferExplorer<CR>
 nnoremap <leader>lb :LustyBufferGrep<CR>
