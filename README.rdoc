@@ -1,7 +1,51 @@
-= Ryan Bates Dot Files
+= Ryan Bates stolen dotfiles
+
+== VIM
+
+=== General
+  <F4> toggle paste mode
+  <space> no highlight
+  jk works as <ESC> in insert mode
+
+=== Command-T
+  ,t :CommandT
+  ,b :LustyBufferExplorer
+  ,lb :LustyBufferGrep
+
+=== buffers
+  ,. next buffer
+  ,m previuos buffer
+
+=== Nerd Commenter
+
+  [n],cc Comment out the current line or text selected in visual mode.
+  [n],cn Same as ,cc but forces nesting.
+  [n],c<space> Toggles the comment state of the selected line(s). 
+               If the topmost selected line is commented, all selected lines 
+               are uncommented and vice versa.
+  [n],cm Comments the given lines using only one set of multipart delimiters.
+  [n],ci Toggles the comment state of the selected line(s) individually.
+  [n],cs Comments out the selected lines 'sexily'
+  [n],cy Same as ,cc except that the commented line(s) are yanked first.
+  ,c$ Comments the current line from the cursor to the end of line.
+  ,cA Adds comment delimiters to the end of line and goes into insert mode
+      between them.
+  ,ca Switches to the alternative set of delimiters.
+  [n],cl
+  [n],cb Same as ,cc except that the delimiters are aligned down the
+         left side (,cl) or both sides (,cb).
+  [n],cu Uncomments the selected line(s).
+
+Nerd Commenter based commands, which accepts ranges. No range means whole file.
+
+  :Ct = ,c<space>
+  Rest is adequate:
+  :Cc, :Cn, :Cm, :Ci, :Cs, :Cy, :Cl, :Cb, :Cu
+
+
+= Original Ryan's readme
 
 These are config files to set up a system the way I like it.
-
 
 == Installation
 
