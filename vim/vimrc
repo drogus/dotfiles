@@ -83,8 +83,11 @@ command! -nargs=? -range=% Cu :normal <line1>ggv<line2>gg<Leader>cu
 " Command-T config
 let g:CommandTMaxFiles=20000
 nnoremap <leader>t :CommandT<CR>
+
+" Lusty
 nnoremap <leader>b :LustyBufferExplorer<CR>
 nnoremap <leader>lb :LustyBufferGrep<CR>
+nnoremap <leader>h :LustyFilesystemExplorerFromHere<CR>
 
 colorscheme molokai
 
