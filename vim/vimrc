@@ -16,6 +16,8 @@ Bundle 'sjbach/lusty'
 Bundle 'tpope/vim-fugitive'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'scrooloose/nerdcommenter'
+Bundle 'groenewege/vim-less'
+Bundle 'bbommarito/vim-slim'
 
 filetype plugin indent on       " load file type plugins + indentation
 
