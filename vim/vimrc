@@ -18,8 +18,12 @@ Bundle 'kchmck/vim-coffee-script'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'groenewege/vim-less'
 Bundle 'bbommarito/vim-slim'
+Bundle 'nono/vim-handlebars'
+Bundle 'kien/ctrlp.vim'
 
 filetype plugin indent on       " load file type plugins + indentation
+
+let g:ctrlp_user_command = 'find %s -type f \( ! -path "*/vendor/*" ! -path "*.git/*" ! -path "*/.*" ! -path "*/tmp/*" ! -name "*.so" ! -name "*.swp" ! -name "*.zip" ! -name "*.png" ! -name "*.jpg" ! -path "*/b/*" \)'
 
 set hidden " For lusty explorer
 
@@ -81,8 +85,11 @@ command! -nargs=? -range=% Cu :normal <line1>ggv<line2>gg<Leader>cu
 " Command-T config
 let g:CommandTMaxFiles=20000
 nnoremap <leader>t :CommandT<CR>
+
+" Lusty
 nnoremap <leader>b :LustyBufferExplorer<CR>
 nnoremap <leader>lb :LustyBufferGrep<CR>
+nnoremap <leader>h :LustyFilesystemExplorerFromHere<CR>
 
 colorscheme molokai
 
