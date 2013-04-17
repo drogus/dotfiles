@@ -1,21 +1,18 @@
 [user]
-	name = <%= print("Your Name: "); STDOUT.flush; STDIN.gets.chomp %>
-	email = <%= print("Your Email: "); STDOUT.flush; STDIN.gets.chomp %>
+	name = Lukasz Sarnacki
+	email = lukesarnacki@gmail.com
 [color]
 	diff = auto
 	status = auto
 	branch = auto
 [core]
-	excludesfile = <%= ENV['HOME'] %>/.gitignore
-	editor = mate_wait
+	editor = vim
 	autocrlf = input
+	excludesfile = /Users/sarniak/.gitignore_global
 [apply]
 	whitespace = nowarn
 [format]
 	pretty = %C(yellow)%h%Creset %s %C(red)(%an, %cr)%Creset
-[github]
-	user = <%= print("GitHub Username: "); STDOUT.flush; STDIN.gets.chomp %>
-	token = <%= print("GitHub API Token: "); STDOUT.flush; STDIN.gets.chomp %>
 [alias]
         shift = !$HOME/bin/git-shift
         co = checkout
