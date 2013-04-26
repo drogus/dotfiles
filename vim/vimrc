@@ -120,8 +120,7 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Make Y behave like other capitals
-map Y y$
+au BufNewFile,BufRead *.sql setf pgsql
 
 " automatically reload vimrc when it's saved
 au BufWritePost .vimrc so ~/.vimrc
