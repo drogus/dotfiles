@@ -141,3 +141,6 @@ nnoremap <silent> <C-S> :if expand("%") == ""<CR>browse confirm w<CR>else<CR>con
 
 " Play nice with tmux
 set term=screen-256color
+
+" Use unnamed register by default
+set clipboard=unnamed
