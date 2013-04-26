@@ -28,7 +28,7 @@ Bundle 'vim-scripts/AutoTag'
 
 filetype plugin indent on       " load file type plugins + indentation
 
-let g:ctrlp_user_command = 'find %s -type f \( ! -path "*/vendor/*" ! -path "*.git/*" ! -path "*/.*" ! -path "*/tmp/*" ! -name "*.so" ! -name "*.swp" ! -name "*.zip" ! -name "*.png" ! -name "*.jpg" ! -path "*/b/*" \)'
+let g:ctrlp_user_command = 'find %s -type f \( ! -path "*/vendor/bundle*" ! -path "*.git/*" ! -path "*/.*" ! -path "*/tmp/*" ! -path "tmp/*" ! -name "*.so" ! -name "*.swp" ! -name "*.zip" ! -name "*.png" ! -name "*.jpg" ! -path "*/b/*" \)'
 
 set hidden " For lusty explorer
 
