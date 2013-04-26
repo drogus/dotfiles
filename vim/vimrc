@@ -87,16 +87,18 @@ command! -nargs=? -range=% Cl :normal <line1>ggv<line2>gg<Leader>cl
 command! -nargs=? -range=% Cb :normal <line1>ggv<line2>gg<Leader>cb
 command! -nargs=? -range=% Cu :normal <line1>ggv<line2>gg<Leader>cu
 
-" Command-T config
-let g:CommandTMaxFiles=20000
-nnoremap <leader>t :CommandT<CR>
-
 " Lusty
 nnoremap <leader>b :LustyBufferExplorer<CR>
 nnoremap <leader>lb :LustyBufferGrep<CR>
 nnoremap <leader>h :LustyFilesystemExplorerFromHere<CR>
 
-colorscheme molokai
+" Solarized Colorscheme Config
+let g:solarized_contrast="high"    "default value is normal
+let g:solarized_visibility="high"    "default value is normal
+let g:solarized_diffmode="high"    "default value is normal
+syntax enable
+set background=light
+colorscheme solarized
 
 " Toggle paste mode
 nmap <silent> <F4> :set invpaste<CR>:set paste?<CR>
