@@ -8,3 +8,8 @@
 *#
 .#*
 .swp
+/b
+/vendor/bundle
+/.bundle
+tags
+.swo
