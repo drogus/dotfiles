@@ -29,5 +29,8 @@ alias scaffold='script/generate nifty_scaffold'
 alias migrate='rake db:migrate db:test:clone'
 alias rst='touch tmp/restart.txt'
 
+# other
+alias rgrep="grep -r"
+
 # commands starting with % for pasting from web
 alias %=' '
