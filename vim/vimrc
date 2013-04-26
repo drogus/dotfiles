@@ -122,5 +122,3 @@ nnoremap <C-l> <C-w>l
 
 au BufNewFile,BufRead *.sql setf pgsql
 
-" automatically reload vimrc when it's saved
-au BufWritePost .vimrc so ~/.vimrc
