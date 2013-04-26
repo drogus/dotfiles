@@ -34,3 +34,5 @@ alias rgrep="grep -r"
 
 # commands starting with % for pasting from web
 alias %=' '
+
+alias prettify_json="python -mjson.tool"
