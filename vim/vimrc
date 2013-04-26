@@ -138,3 +138,6 @@ vnoremap <silent> # :<C-U>
 " If the current buffer has never been saved, it will have no name,
 " call the file browser to save it, otherwise just save it.
 nnoremap <silent> <C-S> :if expand("%") == ""<CR>browse confirm w<CR>else<CR>confirm w<CR>endif<CR>
+
+" Play nice with tmux
+set term=screen-256color
