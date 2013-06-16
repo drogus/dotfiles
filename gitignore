@@ -13,3 +13,7 @@
 /.bundle
 tags
 .swo
+PLAN
+.yardoc
+.sass-cache
+.ruby-version
