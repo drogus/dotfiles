@@ -11,23 +11,26 @@ call vundle#rc()
 
 " let Vundle manage Vundle
 Bundle 'gmarik/vundle'
-Bundle "vim-ruby/vim-ruby"
+Bundle 'vim-ruby/vim-ruby'
 Bundle 'tpope/vim-rails'
 Bundle 'wincent/Command-T'
 Bundle 'sjbach/lusty'
 Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-surround'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'groenewege/vim-less'
 Bundle 'bbommarito/vim-slim'
 Bundle 'nono/vim-handlebars'
 Bundle 'kien/ctrlp.vim'
+Bundle 'sirver/ultisnips'
 "Bundle 'tpope/vim-markdown'
 "Bundle 'suan/vim-instant-markdown'
 
 filetype plugin indent on       " load file type plugins + indentation
 
 let g:ctrlp_user_command = 'find %s -type f \( ! -path "*/vendor/*" ! -path "*.git/*" ! -path "*/.*" ! -path "*/tmp/*" ! -name "*.so" ! -name "*.swp" ! -name "*.zip" ! -name "*.png" ! -name "*.jpg" ! -path "*/b/*" \)'
+let g:ctrlp_working_path_mode = 'ra'
 
 set hidden " For lusty explorer
 
@@ -58,6 +61,7 @@ set smartcase                   " ... unless they contain at least one capital l
 " cancel highlight with space
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 
+" go into command mode with jk
 inoremap jk <Left><C-[>
 
 set number
@@ -122,5 +126,5 @@ map Y y$
 au BufWritePost .vimrc so ~/.vimrc
 
 " Compile LessCSS on save
-autocmd BufWritePost,FileWritePost *.less :silent !lessc <afile> <afile>:p:r.css
-autocmd BufWritePost *.md,*.markdown :silent !cat %:p | curl -X PUT -T - http://localhost:8090/
+" autocmd BufWritePost,FileWritePost *.less :silent !lessc <afile> <afile>:p:r.css
+" autocmd BufWritePost *.md,*.markdown :silent !cat %:p | curl -X PUT -T - http://localhost:8090/
