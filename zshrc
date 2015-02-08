@@ -16,3 +16,13 @@ function new-scratch {
   cd $cur_dir
   echo "New scratch dir ready for grinding ;>"
 }
+
+source $HOME/.rvm/scripts/rvm
+
+alias nom='npm cache clear && rm -rf node_modules && npm install'
+alias nombom='npm cache clear && bower cache clean && rm -rf node_modules bower_components && npm install && bower install'
+
+eval "$(/Users/drogus/.trvs/bin/trvs init -)"
+
+# added by travis gem
+[ -f /Users/drogus/.travis/travis.sh ] && source /Users/drogus/.travis/travis.sh

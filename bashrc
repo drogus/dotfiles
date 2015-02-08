@@ -9,3 +9,6 @@ if [ -f ~/.localrc ]; then
 fi
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+# added by travis gem
+[ -f /Users/drogus/.travis/travis.sh ] && source /Users/drogus/.travis/travis.sh
