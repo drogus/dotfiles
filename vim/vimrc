@@ -8,28 +8,58 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " let Vundle manage Vundle
+Plugin 'gmarik/Vundle.vim'
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'gmarik/vundle'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
 Plugin 'sjbach/lusty'
+Plugin 'gregsexton/gitv'
+Plugin 'mattn/gist-vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-git'
 Plugin 'kchmck/vim-coffee-script'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'nono/vim-handlebars'
+Plugin 'tomtom/tcomment_vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'exu/pgsql.vim'
-Plugin 'altercation/vim-colors-solarized'
+Plugin 'skwp/vim-colors-solarized'
 Plugin 'tpope/vim-surround'
 Plugin 'mileszs/ack.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'tpope/vim-bundler'
 Plugin 'myusuf3/numbers.vim'
-Plugin 'vim-scripts/AutoTag'
 Plugin 'JazzCore/ctrlp-cmatcher'
 Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-easytags'
+Plugin 'vim-scripts/AutoTag'
 Plugin 'majutsushi/tagbar'
+Plugin 'itchyny/lightline.vim'
+Plugin 'xsunsmile/showmarks'
+" Support for lots of languages
+Plugin 'sheerun/vim-polyglot'
+
+Plugin 'marcweber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
+Plugin 'rking/ag.vim'
+Plugin 'vim-scripts/IndexedSearch'
+Plugin 'nelstrom/vim-visual-star-search'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'AndrewRadev/splitjoin.vim'
+Plugin 'chrisbra/NrrwRgn'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'bogado/file-line.git'
+Plugin 'sjl/gundo.vim'
+Plugin 'tpope/vim-repeat'
+Plugin 'vim-scripts/sudo.vim'
+Plugin 'goldfeld/ctrlr.vim'
+
+" to check:
+" tpope/vim-abolish
+" tpope/vim-endwise.git
+" christoomey/vim-tmux-navigator
+" vim-scripts/camelcasemotion.git
+" vim-scripts/matchit.zip.git
+
 
 call vundle#end()
 
@@ -88,11 +118,6 @@ inoremap jk <Left><C-[>]
 " cancel highlight with space
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 
-" don't add files that are usually not needed in ctrlp for better speed
-let g:ctrlp_user_command = 'find %s -type f \( ! -path "node_modules/*" ! -path "*/vendor/bundle*" ! -path "*.git/*" ! -path "*/.*" ! -path "*/tmp/*" ! -path "tmp/*" ! -name "*.so" ! -name "*.swp" ! -name "*.zip" ! -name "*.png" ! -name "*.jpg" ! -path "*/b/*" \)'
-" use cmatcher, it's much faster than the default
-let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
-
 " Play nice with tmux
 set term=screen-256color
 
@@ -104,17 +129,8 @@ set fo-=tc " but don't wrap automatically (will still allow to rewrap with gq)
 highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 
 " shortcuts for LustyBufferExplorer
-nnoremap <leader>b :LustyBufferExplorer<CR>
 nnoremap <leader>lb :LustyBufferGrep<CR>
 nnoremap <leader>h :LustyFilesystemExplorerFromHere<CR>
-
-" Solarized Colorscheme Config
-let g:solarized_contrast="high"    "default value is normal
-let g:solarized_visibility="high"    "default value is normal
-let g:solarized_diffmode="high"    "default value is normal
-syntax enable
-set background=light
-colorscheme solarized
 
 " Toggle paste mode (no automatic indentation)
 nmap <silent> <F4> :set invpaste<CR>:set paste?<CR>
@@ -136,13 +152,130 @@ nnoremap <C-l> <C-w>l
 au BufNewFile,BufRead *.sql setf pgsql
 
 " Use unnamed register by default
-set clipboard=unnamed
+" set clipboard=unnamed
 
 " update ctags aynchronously
-let g:easytags_async=1
+" let g:easytags_async=1
+
+" hit ,f to find the definition of the current class
+" this uses ctags. the standard way to get this is Ctrl-]
+nnoremap <silent> ,f <C-]>
+
+" use ,F to jump to tag in a vertical split
+nnoremap <silent> ,F :let word=expand("<cword>")<CR>:vsp<CR>:wincmd w<cr>:exec("tag ". word)<cr>
+
+" AutoTag
+" Seems to have problems with some vim files
+let g:autotagExcludeSuffixes="tml.xml.text.txt.vim"
 
 " map tagbar to ,t
 nnoremap <silent> <Leader>t :TagbarToggle<CR>
 
 " more cmds history
 set history=1000
+
+" Tell showmarks to not include the various brace marks (),{}, etc
+let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY"
+
+" Open the Ag command and place the cursor into the quotes
+nmap ,ag :Ag ""<Left>
+nmap ,af :AgFile ""<Left>
+
+"make Y consistent with C and D
+nnoremap Y y$
+function! YRRunAfterMaps()
+  nnoremap Y   :<C-U>YRYankCount 'y$'<CR>
+endfunction
+
+" ," Surround a word with "quotes"
+map ," ysiw"
+vmap ," c"<C-R>""<ESC>
+
+" ,' Surround a word with 'single quotes'
+map ,' ysiw'
+vmap ,' c'<C-R>"'<ESC>
+
+" ,) or ,( Surround a word with (parens)
+" The difference is in whether a space is put in
+map ,( ysiw(
+map ,) ysiw)
+vmap ,( c( <C-R>" )<ESC>
+vmap ,) c(<C-R>")<ESC>
+
+" ,[ Surround a word with [brackets]
+map ,] ysiw]
+map ,[ ysiw[
+vmap ,[ c[ <C-R>" ]<ESC>
+vmap ,] c[<C-R>"]<ESC>
+
+" ,{ Surround a word with {braces}
+map ,} ysiw}
+map ,{ ysiw{
+vmap ,} c{ <C-R>" }<ESC>
+vmap ,{ c{<C-R>"}<ESC>
+
+map ,` ysiw`
+
+" gary bernhardt's hashrocket
+imap <c-l> <space>=><space>
+
+"Go to last edit location with ,.
+nnoremap ,. '.
+
+" Make gf (go to file) create the file, if not existent
+nnoremap gf :e<cfile><CR>
+nnoremap <C-w>f :sp +e<cfile><CR>
+nnoremap <C-w>gf :tabe<cfile><CR>
+
+" Zoom in
+map <silent> ,gz <C-w>o
+
+" Create window splits easier. The default
+" way is Ctrl-w,v and Ctrl-w,s
+nnoremap <silent> vv <C-w>v
+nnoremap <silent> ss <C-w>s
+
+" ============================
+" SplitJoin plugin
+" ============================
+nmap sj :SplitjoinSplit<cr>
+nmap sk :SplitjoinJoin<cr>
+
+" w!! to write a file as sudo
+" stolen from Steve Losh
+cmap w!! w !sudo tee % >/dev/null
+
+:vmap ,gt :!tidy -q -i --show-errors 0<CR>
+
+" If you visually select something and hit paste
+" that thing gets yanked into your buffer. This
+" generally is annoying when you're copying one item
+" and repeatedly pasting it. This changes the paste
+" command in visual mode so that it doesn't overwrite
+" whatever is in your paste buffer.
+"
+vnoremap p "_dP
+
+nmap ,u :GundoToggle<CR>
+
+"Use the silver searcher for lightning fast Gsearch command
+set grepprg=git\ grep
+let g:grep_cmd_opts = '--line-number'
+
+" Automatically jump to a file at the correct line number
+" i.e. if your cursor is over /some/path.rb:50 then using 'gf' on it will take
+" you to that line
+
+" use ,gf to go to file in a vertical split
+nnoremap <silent> ,gf   :vertical botright wincmd F<CR>
+nnoremap <silent> <C-F> :vertical botright wincmd F<CR>
+
+so ~/.dotfiles/vim/settings.vim
+
+" Resize windows with arrow keys
+nnoremap <C-Up> <C-w>+
+nnoremap <C-Down> <C-w>-
+nnoremap <C-Left> <C-w><
+nnoremap <C-Right>  <C-w>>
+
+
