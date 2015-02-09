@@ -15,7 +15,7 @@ else
 endif
 
 " use cmatcher, it's much faster than the default
-let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+let g:ctrlp_match_func = { 'match' : 'matcher#cmatch' }
 
 " Don't jump to already open window. This is annoying if you are maintaining
 " several Tab workspaces and want to open two windows into the same file.
