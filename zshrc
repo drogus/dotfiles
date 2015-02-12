@@ -26,3 +26,9 @@ eval "$(/Users/drogus/.trvs/bin/trvs init -)"
 
 # added by travis gem
 [ -f /Users/drogus/.travis/travis.sh ] && source /Users/drogus/.travis/travis.sh
+
+# allow to use ctrl-s inside vim
+alias vim="stty stop '' -ixoff ; vim"
+
+# ttyctl -f is supposed to achieve what alias above does, but I can't make it
+# work

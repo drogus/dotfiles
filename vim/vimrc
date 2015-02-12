@@ -273,3 +273,7 @@ nnoremap <silent> <Esc>[1;9A <C-w>+
 nnoremap <silent> <Esc>[1;9B <C-w>-
 nnoremap <silent> <Esc>[1;9D <C-w><
 nnoremap <silent> <Esc>[1;9C <C-w>>
+
+noremap  <silent> <C-S> :w<CR>
+vnoremap <silent> <C-S> <C-C>:w<CR>
+inoremap <silent> <C-S> <C-O>:w<CR>
