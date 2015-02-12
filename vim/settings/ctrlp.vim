@@ -14,6 +14,9 @@ else
   let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
 endif
 
+" default to search by filename
+"let g:ctrlp_by_filename = 1
+
 " use cmatcher, it's much faster than the default
 let g:ctrlp_match_func = { 'match' : 'matcher#cmatch' }
 
