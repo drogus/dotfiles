@@ -122,10 +122,10 @@ map("n", "qq", ":q<cr>")
 map("n", "qa", ":qa<cr>")
 
 -- Window navigation
-map("n", "<C-j>", "<C-w>j<C-w>")
-map("n", "<C-h>", "<C-w>h<C-w>")
-map("n", "<C-k>", "<C-w>k<C-w>")
-map("n", "<C-l>", "<C-w>l<C-w>")
+-- map("n", "<C-j>", "<C-w>j<C-w>")
+-- map("n", "<C-h>", "<C-w>h<C-w>")
+-- map("n", "<C-k>", "<C-w>k<C-w>")
+-- map("n", "<C-l>", "<C-w>l<C-w>")
 
 -- Save
 vim.cmd([[

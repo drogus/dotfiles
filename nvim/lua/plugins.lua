@@ -50,6 +50,7 @@ return require('packer').startup(function(use)
   use 'williamboman/mason.nvim' -- Manage LSPs and DAPs
   use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
   use {'theHamsta/nvim-dap-virtual-text'}
+  use 'christoomey/vim-tmux-navigator'
 
 end)
 
