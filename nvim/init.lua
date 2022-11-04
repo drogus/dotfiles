@@ -192,6 +192,11 @@ nnoremap <silent> g[ <cmd>lua vim.diagnostic.goto_prev()<CR>
 nnoremap <silent> g] <cmd>lua vim.diagnostic.goto_next()<CR>
 ]])
 
+-- Ruby lsp
+require'lspconfig'.solargraph.setup{}
+require'lspconfig'.sorbet.setup{}
+--require'lspconfig'.typeprof.setup{}
+
 -- Crates Nvim
 vim.cmd([[
 nnoremap <silent> <leader>ct :lua require('crates').toggle()<cr>
