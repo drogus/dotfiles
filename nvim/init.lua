@@ -413,23 +413,6 @@ require('crates').setup({
 -- LSP Config
 local nvim_lsp = require 'lspconfig'
 
-
--- RUST
--- -------------------------------------
-local rt = require("rust-tools")
-
-rt.setup({
-    server = {
-        on_attach = function(_, bufnr)
-            -- Hover actions
-            vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-            -- Code action groups
-            vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-        end,
-    },
-})
-
-
 -- Completion
 
 require('lspkind').init({
@@ -550,3 +533,57 @@ require('nvim-treesitter.configs').setup {
         enable = true,
     }
 }
+
+-- dap
+
+local dap = require('dap')
+dap.defaults.fallback.terminal_win_cmd = "50vsplit new"
+
+require("dapui").setup()
+
+require("nvim-dap-virtual-text").setup {
+    commented = true,
+  }
+
+  local dap, dapui = require "dap", require "dapui"
+  dapui.setup {} -- use default
+  dap.listeners.after.event_initialized["dapui_config"] = function()
+    dapui.open()
+  end
+  dap.listeners.before.event_terminated["dapui_config"] = function()
+    dapui.close()
+  end
+  dap.listeners.before.event_exited["dapui_config"] = function()
+    dapui.close()
+  end
+
+
+
+-- RUST
+-- -------------------------------------
+local rt = require("rust-tools")
+
+local extension_path = vim.env.HOME
+  .. "/.vscode/extensions/vadimcn.vscode-lldb-1.8.1/"
+local codelldb_path = extension_path .. "adapter/codelldb"
+local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
+
+rt.setup({
+    server = {
+        on_attach = function(_, bufnr)
+            -- Hover actions
+            vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+            -- Code action groups
+            vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+        end,
+    },
+    dap = {
+      adapter = require("rust-tools.dap").get_codelldb_adapter(
+        codelldb_path,
+        liblldb_path
+      ),
+  },
+})
+
+
+

@@ -48,7 +48,8 @@ return require('packer').startup(function(use)
   use 'm-demare/hlargs.nvim' -- Highlight argument definitions and usages
   use 'nvim-lua/plenary.nvim' -- Collection of Lua functions
   use 'williamboman/mason.nvim' -- Manage LSPs and DAPs
-  use 'mfussenegger/nvim-dap' -- Debugger
+  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+  use {'theHamsta/nvim-dap-virtual-text'}
 
 end)
 
