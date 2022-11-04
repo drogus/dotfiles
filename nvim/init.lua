@@ -127,6 +127,12 @@ map("n", "qa", ":qa<cr>")
 -- map("n", "<C-k>", "<C-w>k<C-w>")
 -- map("n", "<C-l>", "<C-w>l<C-w>")
 
+-- Splits
+map('n', '<leader>v', '<cmd>vsp<cr>')
+map('i', '<leader>v', '<cmd>vsp<cr>')
+map('n', '<leader>s', '<cmd>sp<cr>')
+map('i', '<leader>s', '<cmd>sp<cr>')
+
 -- Save
 vim.cmd([[
 noremap  <silent> <C-S> :w<CR>
