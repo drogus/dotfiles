@@ -149,7 +149,6 @@ map("n", "HL", ":HopLineStart<cr>")
 
 -- Telescope
 map("n", "<C-p>", ":lua require('telescope.builtin').find_files()<cr>")
-map("n", "<leader>ff", ":lua require('telescope.builtin').find_files()<cr>")
 -- map("n", "<leader>fm", ":Telescope media_files<cr>")
 map("n", "<leader>fg", ":lua require('telescope.builtin').live_grep()<cr>")
 map("n", "<leader>b", ":lua require('telescope.builtin').buffers()<cr>")
@@ -203,6 +202,7 @@ nnoremap <silent> g] <cmd>lua vim.diagnostic.goto_next()<CR>
 -- Ruby lsp
 require'lspconfig'.solargraph.setup{}
 require'lspconfig'.sorbet.setup{}
+require'lspconfig'.sumneko_lua.setup{}
 --require'lspconfig'.typeprof.setup{}
 
 -- Crates Nvim
@@ -440,6 +440,12 @@ vim.api.nvim_set_option('updatetime', 350)
 
 local lspkind = require('lspkind')
 local cmp = require 'cmp'
+local luasnip = require("luasnip")
+
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
 
 cmp.setup({
     -- Enable LSP snippets
@@ -451,9 +457,28 @@ cmp.setup({
     },
     mapping = {
         -- Add tab support
-        ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-        ['<Tab>'] = cmp.mapping.select_next_item(),
-        ['<C-S-f>'] = cmp.mapping.scroll_docs(-4),
+        ["<Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+          elseif has_words_before() then
+            cmp.complete()
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+        ['<C-w>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.close(),
@@ -524,6 +549,15 @@ cmp.setup.cmdline(':', {
     })
 })
 
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+require('lspconfig')['rust_analyzer'].setup {
+  capabilities = capabilities
+}
+
+
+
 -- treesitter
 
 require('nvim-treesitter.configs').setup {
@@ -552,8 +586,6 @@ require('nvim-treesitter.configs').setup {
 
 local dap = require('dap')
 dap.defaults.fallback.terminal_win_cmd = "50vsplit new"
-
-require("dapui").setup()
 
 require("nvim-dap-virtual-text").setup {
     commented = true,
@@ -644,3 +676,6 @@ vnoremap <leader>s <esc>:lua require('spectre').open_visual()<CR>
 nnoremap <leader>sp viw:lua require('spectre').open_file_search()<cr>
 " run command :Spectre
 ]])
+
+require("luasnip.loaders.from_vscode").lazy_load()
+
