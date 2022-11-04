@@ -51,6 +51,7 @@ return require('packer').startup(function(use)
   use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
   use {'theHamsta/nvim-dap-virtual-text'}
   use 'christoomey/vim-tmux-navigator'
+  use 'nvim-pack/nvim-spectre'
 
 end)
 
