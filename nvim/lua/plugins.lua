@@ -10,12 +10,12 @@ return require('packer').startup(function(use)
   use 'williamboman/mason-lspconfig.nvim' -- manage LSP binaries
   use 'overcache/NeoSolarized'
   use { 'kyazdani42/nvim-tree.lua', -- Filesystem navigation
-        requires = 'kyazdani42/nvim-web-devicons' } -- Filesystem icons
+    requires = 'kyazdani42/nvim-web-devicons' } -- Filesystem icons
   use { 'nvim-lualine/lualine.nvim', -- Statusline
-        requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
   use {
-      "windwp/nvim-autopairs", -- Autocomplete (), {}, []
-      config = function() require("nvim-autopairs").setup {} end
+    "windwp/nvim-autopairs", -- Autocomplete (), {}, []
+    config = function() require("nvim-autopairs").setup {} end
   }
   use 'lewis6991/impatient.nvim' -- Makes neovim faster
   use 'tpope/vim-surround'
@@ -48,11 +48,10 @@ return require('packer').startup(function(use)
   use 'm-demare/hlargs.nvim' -- Highlight argument definitions and usages
   use 'nvim-lua/plenary.nvim' -- Collection of Lua functions
   use 'williamboman/mason.nvim' -- Manage LSPs and DAPs
-  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
-  use {'theHamsta/nvim-dap-virtual-text'}
+  use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
+  use { 'theHamsta/nvim-dap-virtual-text' }
   use 'christoomey/vim-tmux-navigator'
   use 'hrsh7th/cmp-cmdline'
   use 'nvim-pack/nvim-spectre'
   use "rafamadriz/friendly-snippets"
 end)
-
