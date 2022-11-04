@@ -132,6 +132,8 @@ map('n', '<leader>v', '<cmd>vsp<cr>')
 map('i', '<leader>v', '<cmd>vsp<cr>')
 map('n', '<leader>s', '<cmd>sp<cr>')
 map('i', '<leader>s', '<cmd>sp<cr>')
+map('n', 'vv', '<cmd>vsp<cr>')
+map('n', 'ss', '<cmd>sp<cr>')
 
 -- Save
 vim.cmd([[
