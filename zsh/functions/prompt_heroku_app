@@ -1,0 +1,7 @@
+if [ -n "$HEROKU_APP" ]; then
+    local s="HRK("
+    s+="$HEROKU_APP"
+    s+=")"
+
+    printf " %s%s" "%{${fg[yellow]}%}" $s
+fi
