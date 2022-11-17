@@ -8,7 +8,20 @@ return require('packer').startup(function(use)
   use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
   use "max397574/better-escape.nvim" -- faster jj / kshadowk
   use 'williamboman/mason-lspconfig.nvim' -- manage LSP binaries
-  use 'overcache/NeoSolarized'
+
+  -- color themes
+  use "ellisonleao/gruvbox.nvim"
+  use "EdenEast/nightfox.nvim"
+  use "sainnhe/sonokai"
+  use "sainnhe/gruvbox-material"
+  use "overcache/NeoSolarized"
+  use "folke/tokyonight.nvim"
+  use 'navarasu/onedark.nvim'
+  use 'altercation/vim-colors-solarized'
+  use 'Shatur/neovim-ayu'
+  use 'rakr/vim-one'
+  use 'EdenEast/nightfox.nvim'
+
   use { 'kyazdani42/nvim-tree.lua', -- Filesystem navigation
     requires = 'kyazdani42/nvim-web-devicons' } -- Filesystem icons
   use { 'nvim-lualine/lualine.nvim', -- Statusline
@@ -54,4 +67,16 @@ return require('packer').startup(function(use)
   use 'hrsh7th/cmp-cmdline'
   use 'nvim-pack/nvim-spectre'
   use "rafamadriz/friendly-snippets"
+  use {
+    "nvim-neotest/neotest",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-neotest/neotest-python",
+      "jfpedroza/neotest-elixir",
+      "rouge8/neotest-rust",
+      "olimorris/neotest-rspec"
+    }
+  }
 end)

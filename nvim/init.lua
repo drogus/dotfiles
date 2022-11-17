@@ -4,8 +4,8 @@ require('impatient')
 vim.g.mapleader = ","
 
 vim.cmd([[
-  colorscheme NeoSolarized
   set background=light
+  colorscheme gruvbox
 ]])
 
 vim.cmd([[
@@ -560,27 +560,27 @@ require('lspconfig')['rust_analyzer'].setup {
 
 -- treesitter
 
-require('nvim-treesitter.configs').setup {
-  ensure_installed = { "bash", "c", "cmake", "css", "dockerfile", "go", "gomod", "gowork", "hcl", "help", "html",
-    "http", "javascript", "json", "make", "markdown", "python", "regex", "ruby", "rust", "toml", "vim", "yaml",
-    "zig" },
-  auto_install = true,
-  highlight = {
-    enable = true,
-  },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = "<S-Tab>", -- normal mode
-      node_incremental = "<Tab>", -- visual mode
-      node_decremental = "<S-Tab", -- visual mode
-    },
-  },
-  ident = { enable = true },
-  rainbow = {
-    enable = true,
-  }
-}
+-- require('nvim-treesitter.configs').setup {
+--   ensure_installed = { "bash", "c", "cmake", "css", "dockerfile", "go", "gomod", "gowork", "hcl", "help", "html",
+--     "http", "javascript", "json", "make", "markdown", "python", "regex", "ruby", "rust", "toml", "vim", "yaml",
+--     "zig" },
+--   auto_install = true,
+--   highlight = {
+--     enable = true,
+--   },
+--   incremental_selection = {
+--     enable = true,
+--     keymaps = {
+--       init_selection = "<S-Tab>", -- normal mode
+--       node_incremental = "<Tab>", -- visual mode
+--       node_decremental = "<S-Tab", -- visual mode
+--     },
+--   },
+--   ident = { enable = true },
+--   rainbow = {
+--     enable = true,
+--   }
+-- }
 
 -- dap
 
@@ -631,6 +631,8 @@ rt.setup({
   },
 })
 
+dap.set_log_level("TRACE")
+
 dap.adapters.ruby = function(callback, config)
   callback {
     type = "server",
@@ -662,6 +664,14 @@ dap.configurations.ruby = {
     command = "rspec",
     script = "${file}",
   },
+  {
+    type = "ruby",
+    name = "run rails",
+    request = "attach",
+    localfs = true,
+    command = "rails s",
+    script = "",
+  },
 }
 
 
@@ -678,3 +688,12 @@ nnoremap <leader>sp viw:lua require('spectre').open_file_search()<cr>
 ]])
 
 require("luasnip.loaders.from_vscode").lazy_load()
+
+require("neotest").setup({
+  adapters = {
+    require("neotest-python"),
+    require('neotest-rspec'),
+    require('neotest-rust'),
+    require('neotest-elixir'),
+  }
+})
