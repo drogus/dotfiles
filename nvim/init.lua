@@ -4,7 +4,7 @@ require('impatient')
 vim.g.mapleader = ","
 
 vim.cmd([[
-  set background=light
+  set background=dark
   colorscheme gruvbox
 ]])
 
@@ -80,27 +80,36 @@ sign({ name = 'DiagnosticSignHint', text = '' })
 sign({ name = 'DiagnosticSignInfo', text = '' })
 
 vim.diagnostic.config({
-  virtual_text = false,
+  virtual_text = true,
   signs = true,
-  update_in_insert = true,
-  underline = false,
-  severity_sort = true,
-  float = {
-    border = 'single',
-    source = 'always',
-    header = '',
-    prefix = '- ',
-  },
+  -- update_in_insert = true,
+  -- underline = false,
+  -- severity_sort = true,
+  -- float = {
+  --   border = 'single',
+  --   source = 'always',
+  --   header = '',
+  --   prefix = '- ',
+  -- },
 })
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = true,
+    signs = true,
+    update_in_insert = true,
+  }
+)
+
 -- Fixed column for diagnostics to appear
 -- Show autodiagnostic popup on cursor hover_range
 -- Goto previous / next diagnostic warning / error
 -- Show inlay_hints more frequently
-vim.o.updatetime = 350
-opt.signcolumn = 'yes'
-vim.cmd([[
-autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
-]])
+-- vim.o.updatetime = 350
+-- opt.signcolumn = 'yes'
+-- vim.cmd([[
+-- " autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
+-- ]])
 
 opt.history = 1000
 
@@ -116,10 +125,6 @@ function map(mode, lhs, rhs, opts)
   end
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
-
--- Quit buffer
-map("n", "qq", ":q<cr>")
-map("n", "qa", ":qa<cr>")
 
 -- Window navigation
 -- map("n", "<C-j>", "<C-w>j<C-w>")
@@ -151,7 +156,7 @@ map("n", "HL", ":HopLineStart<cr>")
 map("n", "<C-p>", ":lua require('telescope.builtin').find_files()<cr>")
 -- map("n", "<leader>fm", ":Telescope media_files<cr>")
 map("n", "<leader>fg", ":lua require('telescope.builtin').live_grep()<cr>")
-map("n", "<leader>b", ":lua require('telescope.builtin').buffers()<cr>")
+map("n", "<leader>b", ":lua require('telescope.builtin').buffers({ sort_lastused = true, ignore_current_buffer = true })<cr>")
 map("n", "<leader>fh", ":lua require('telescope.builtin').help_tags()<cr>")
 map("n", "<leader>fd", ":lua require('telescope.builtin').diagnostics()<cr>")
 map("n", "<leader>fs", ":lua require('telescope.builtin').lsp_workspace_symbols()<cr>")
@@ -177,8 +182,14 @@ map("n", "<leader>nt", ":NvimTreeToggle<CR>")
 -- map('n', "<leader>tt", ":TagbarToggle<CR>");
 map('n', "<leader>tt", ":SymbolsOutline<CR>");
 
--- LSP Navigation
--- Code Actions
+
+local lsp = require('lsp-zero')
+
+lsp.preset('recommended')
+lsp.setup()
+
+-- -- LSP Navigation
+-- -- Code Actions
 map('n', "ca", ":lua vim.lsp.buf.code_action()<CR>")
 vim.cmd([[
 nnoremap <silent> <c-]>     <cmd>lua vim.lsp.buf.definition()<CR>
@@ -193,7 +204,7 @@ nnoremap <silent> gs        <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gw        <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 nnoremap <silent> ff        <cmd>lua vim.lsp.buf.format()<CR>
 ]])
-
+--
 vim.cmd([[
 nnoremap <silent> g[ <cmd>lua vim.diagnostic.goto_prev()<CR>
 nnoremap <silent> g] <cmd>lua vim.diagnostic.goto_next()<CR>
@@ -206,24 +217,24 @@ require 'lspconfig'.sumneko_lua.setup {}
 --require'lspconfig'.typeprof.setup{}
 
 -- Crates Nvim
-vim.cmd([[
-nnoremap <silent> <leader>ct :lua require('crates').toggle()<cr>
-nnoremap <silent> <leader>cr :lua require('crates').reload()<cr>
-nnoremap <silent> <leader>cv :lua require('crates').show_versions_popup()<cr>
-nnoremap <silent> <leader>cf :lua require('crates').show_features_popup()<cr>
-nnoremap <silent> <leader>cd :lua require('crates').show_dependencies_popup()<cr>
-nnoremap <silent> <leader>cu :lua require('crates').update_crate()<cr>
-vnoremap <silent> <leader>cu :lua require('crates').update_crates()<cr>
-nnoremap <silent> <leader>ca :lua require('crates').update_all_crates()<cr>
-nnoremap <silent> <leader>cU :lua require('crates').upgrade_crate()<cr>
-vnoremap <silent> <leader>cU :lua require('crates').upgrade_crates()<cr>
-nnoremap <silent> <leader>cA :lua require('crates').upgrade_all_crates()<cr>
-nnoremap <silent> <leader>cH :lua require('crates').open_homepage()<cr>
-nnoremap <silent> <leader>cR :lua require('crates').open_repository()<cr>
-nnoremap <silent> <leader>cD :lua require('crates').open_documentation()<cr>
-nnoremap <silent> <leader>cC :lua require('crates').open_crates_io()<cr>
-]])
-
+-- vim.cmd([[
+-- nnoremap <silent> <leader>ct :lua require('crates').toggle()<cr>
+-- nnoremap <silent> <leader>cr :lua require('crates').reload()<cr>
+-- nnoremap <silent> <leader>cv :lua require('crates').show_versions_popup()<cr>
+-- nnoremap <silent> <leader>cf :lua require('crates').show_features_popup()<cr>
+-- nnoremap <silent> <leader>cd :lua require('crates').show_dependencies_popup()<cr>
+-- nnoremap <silent> <leader>cu :lua require('crates').update_crate()<cr>
+-- vnoremap <silent> <leader>cu :lua require('crates').update_crates()<cr>
+-- nnoremap <silent> <leader>ca :lua require('crates').update_all_crates()<cr>
+-- nnoremap <silent> <leader>cU :lua require('crates').upgrade_crate()<cr>
+-- vnoremap <silent> <leader>cU :lua require('crates').upgrade_crates()<cr>
+-- nnoremap <silent> <leader>cA :lua require('crates').upgrade_all_crates()<cr>
+-- nnoremap <silent> <leader>cH :lua require('crates').open_homepage()<cr>
+-- nnoremap <silent> <leader>cR :lua require('crates').open_repository()<cr>
+-- nnoremap <silent> <leader>cD :lua require('crates').open_documentation()<cr>
+-- nnoremap <silent> <leader>cC :lua require('crates').open_crates_io()<cr>
+-- ]])
+--
 -- Comment.nvim configuration
 -- current line
 vim.keymap.set('n', '<C-_>', '<Plug>(comment_toggle_linewise_current)')
@@ -447,140 +458,141 @@ local has_words_before = function()
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
-cmp.setup({
-  -- Enable LSP snippets
-  snippet = {
-    expand = function(args)
-      -- vim.fn["vsnip#anonymous"](args.body) -- For 'vsnip' users.
-      require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-    end,
-  },
-  mapping = {
-    -- Add tab support
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      elseif has_words_before() then
-        cmp.complete()
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
-
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
-    ['<C-w>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm { select = false }
-  },
-  -- Installed sources:
-  sources = {
-    { name = 'path' }, -- file paths
-    { name = 'nvim_lsp', keyword_length = 1, priority = 10 }, -- from language server
-    { name = 'crates', keyword_length = 1, priority = 10 },
-    { name = 'luasnip', keyword_length = 1, priority = 7 }, -- for lua users
-    { name = 'nvim_lsp_signature_help', priority = 8 }, -- display function signatures with current parameter emphasized
-    { name = 'nvim_lua', keyword_length = 1, priority = 8 }, -- complete neovim's Lua runtime API such vim.lsp.*
-    { name = 'buffer', keyword_length = 1, priority = 5 }, -- source current buffer
-    -- { name = 'vsnip', keyword_length = 2 },         -- nvim-cmp source for vim-vsnip
-    { name = 'calc' }, -- source for math calculation
-  },
-  window = {
-    completion = {
-      cmp.config.window.bordered(),
-      col_offset = 3,
-      side_padding = 1,
-    },
-    documentation = cmp.config.window.bordered(),
-
-  },
-  formatting = {
-    fields = { 'menu', 'abbr', 'kind' },
-    format = lspkind.cmp_format({
-      mode = 'symbol_text', -- show only symbol annotations
-      maxwidth = 60, -- prevent the popup from showing more than provided characters
-      -- The function below will be called before any actual modifications from lspkind:
-      before = function(entry, vim_item)
-        local menu_icon = {
-          nvim_lsp = 'λ ',
-          luasnip = '⋗ ',
-          buffer = 'Ω ',
-          path = '🖫 ',
-        }
-        vim_item.menu = menu_icon[entry.source.name]
-        return vim_item
-      end,
-    })
-
-  },
-  preselect = cmp.PreselectMode.None,
-  confirmation = {
-    get_commit_characters = function(commit_characters)
-      return {}
-    end
-  },
-})
-
--- `/` cmdline setup.
-cmp.setup.cmdline('/', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = 'buffer' }
-  }
-})
--- `:` cmdline setup.
-cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  })
-})
-
-
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
--- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-require('lspconfig')['rust_analyzer'].setup {
-  capabilities = capabilities
-}
+-- cmp.setup({
+--   -- Enable LSP snippets
+--   snippet = {
+--     expand = function(args)
+--       -- vim.fn["vsnip#anonymous"](args.body) -- For 'vsnip' users.
+--       require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+--     end,
+--   },
+--   mapping = {
+--     -- Add tab support
+--     ["<Tab>"] = cmp.mapping(function(fallback)
+--       if cmp.visible() then
+--         cmp.select_next_item()
+--       elseif luasnip.expand_or_jumpable() then
+--         luasnip.expand_or_jump()
+--       elseif has_words_before() then
+--         cmp.complete()
+--       else
+--         fallback()
+--       end
+--     end, { "i", "s" }),
+--
+--     ["<S-Tab>"] = cmp.mapping(function(fallback)
+--       if cmp.visible() then
+--         cmp.select_prev_item()
+--       elseif luasnip.jumpable(-1) then
+--         luasnip.jump(-1)
+--       else
+--         fallback()
+--       end
+--     end, { "i", "s" }),
+--     ['<C-w>'] = cmp.mapping.scroll_docs(-4),
+--     ['<C-f>'] = cmp.mapping.scroll_docs(4),
+--     ['<C-Space>'] = cmp.mapping.complete(),
+--     ['<C-e>'] = cmp.mapping.close(),
+--     ['<CR>'] = cmp.mapping.confirm { select = false }
+--   },
+--   -- Installed sources:
+--   sources = {
+--     { name = 'path' }, -- file paths
+--     { name = 'nvim_lsp', keyword_length = 1, priority = 10 }, -- from language server
+--     { name = 'crates', keyword_length = 1, priority = 10 },
+--     { name = 'luasnip', keyword_length = 1, priority = 7 }, -- for lua users
+--     { name = 'nvim_lsp_signature_help', priority = 8 }, -- display function signatures with current parameter emphasized
+--     { name = 'nvim_lua', keyword_length = 1, priority = 8 }, -- complete neovim's Lua runtime API such vim.lsp.*
+--     { name = 'buffer', keyword_length = 1, priority = 5 }, -- source current buffer
+--     -- { name = 'vsnip', keyword_length = 2 },         -- nvim-cmp source for vim-vsnip
+--     { name = 'calc' }, -- source for math calculation
+--   },
+--   window = {
+--     completion = {
+--       cmp.config.window.bordered(),
+--       col_offset = 3,
+--       side_padding = 1,
+--     },
+--     documentation = cmp.config.window.bordered(),
+--
+--   },
+--   formatting = {
+--     fields = { 'menu', 'abbr', 'kind' },
+--     format = lspkind.cmp_format({
+--       mode = 'symbol_text', -- show only symbol annotations
+--       maxwidth = 60, -- prevent the popup from showing more than provided characters
+--       -- The function below will be called before any actual modifications from lspkind:
+--       before = function(entry, vim_item)
+--         local menu_icon = {
+--           nvim_lsp = 'λ ',
+--           luasnip = '⋗ ',
+--           buffer = 'Ω ',
+--           path = '🖫 ',
+--         }
+--         vim_item.menu = menu_icon[entry.source.name]
+--         return vim_item
+--       end,
+--     })
+--
+--   },
+--   preselect = cmp.PreselectMode.None,
+--   confirmation = {
+--     get_commit_characters = function(commit_characters)
+--       return {}
+--     end
+--   },
+-- })
+--
+-- -- `/` cmdline setup.
+-- cmp.setup.cmdline('/', {
+--   mapping = cmp.mapping.preset.cmdline(),
+--   sources = {
+--     { name = 'buffer' }
+--   }
+-- })
+-- -- `:` cmdline setup.
+-- cmp.setup.cmdline(':', {
+--   mapping = cmp.mapping.preset.cmdline(),
+--   sources = cmp.config.sources({
+--     { name = 'path' }
+--   }, {
+--     { name = 'cmdline' }
+--   })
+-- })
+--
+--
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+-- require('lspconfig')['rust_analyzer'].setup {
+--   capabilities = capabilities
+-- }
 
 
 
 -- treesitter
 
--- require('nvim-treesitter.configs').setup {
---   ensure_installed = { "bash", "c", "cmake", "css", "dockerfile", "go", "gomod", "gowork", "hcl", "help", "html",
---     "http", "javascript", "json", "make", "markdown", "python", "regex", "ruby", "rust", "toml", "vim", "yaml",
---     "zig" },
---   auto_install = true,
---   highlight = {
---     enable = true,
---   },
---   incremental_selection = {
---     enable = true,
---     keymaps = {
---       init_selection = "<S-Tab>", -- normal mode
---       node_incremental = "<Tab>", -- visual mode
---       node_decremental = "<S-Tab", -- visual mode
---     },
---   },
---   ident = { enable = true },
---   rainbow = {
---     enable = true,
---   }
--- }
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all"
+  ensure_installed = { "c", "lua", "rust", "ruby", "typescript" , "help", "javascript", "sql"},
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- Automatically install missing parsers when entering buffer
+  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+  auto_install = true,
+
+
+  highlight = {
+    enable = true,
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
 
 -- dap
 
