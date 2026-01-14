@@ -103,4 +103,7 @@ return require('packer').startup(function(use)
     "ray-x/lsp_signature.nvim",
   }
 
+  use 'kdheepak/lazygit.nvim'
+  use 'sbdchd/neoformat'
+  use 'tpope/vim-abolish'
 end)

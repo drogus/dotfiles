@@ -15,10 +15,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 eval "$(direnv hook zsh)"
 bindkey -e
-#
-# added by travis gem
-[ -f /home/drogus/.travis/travis.sh ] && source /home/drogus/.travis/travis.sh
-#
+
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
 if ! pgrep -u "$USER" ssh-agent > /dev/null; then
@@ -44,14 +41,30 @@ antigen bundle bobsoppe/zsh-ssh-agent
 
 antigen theme amuse
 
-export FZF_DEFAULT_COMMAND='fd --type f'
+#export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-antigen bundle andrewferrier/fzf-z
+#
+#antigen bundle andrewferrier/fzf-z
 
 antigen apply
 
-source /usr/local/Homebrew/opt/fzf/shell/key-bindings.zsh
+#source /usr/share/bash-completion/completions/fzf
 
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
+# export ASDF_DIR=/opt/homebrew/Cellar/asdf/0.14.1/libexec
+# . /opt/homebrew/Cellar/asdf/0.14.1/libexec/asdf.sh
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 eval "$(starship init zsh)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export STDB_PATH=$HOME/.stdb
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+HISTSIZE=500000
+SAVEHIST=500000
+setopt appendhistory
+setopt INC_APPEND_HISTORY  
+setopt SHARE_HISTORY
+
+export GPG_TTY=$(tty)

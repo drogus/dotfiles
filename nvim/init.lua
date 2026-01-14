@@ -1,5 +1,5 @@
-require('plugins')
-require('impatient')
+require("plugins")
+require("impatient")
 
 vim.g.mapleader = ","
 
@@ -28,7 +28,7 @@ opt.scrolloff = 4 -- int:  Min num lines of context
 opt.signcolumn = "yes" -- str:  Show the sign column
 opt.numberwidth = 4 -- gutter width
 opt.cursorline = true -- display cursor line
-opt.cursorlineopt = 'number'
+opt.cursorlineopt = "number"
 opt.autoread = true
 
 vim.cmd([[
@@ -43,7 +43,6 @@ silent !mkdir ~/.vim/backups > /dev/null 2>&1
 set undodir=~/.vim/backups
 set undofile
 ]])
-
 
 opt.syntax = "ON" -- str:  Allow syntax highlighting
 opt.termguicolors = true -- bool: If term supports ui color then enable
@@ -68,38 +67,36 @@ vim.cmd([[
 
 -- LSP Diagnostics Options Setup
 local sign = function(opts)
-  vim.fn.sign_define(opts.name, {
-    texthl = opts.name,
-    text = opts.text,
-    numhl = ''
-  })
+	vim.fn.sign_define(opts.name, {
+		texthl = opts.name,
+		text = opts.text,
+		numhl = "",
+	})
 end
-sign({ name = 'DiagnosticSignError', text = '' })
-sign({ name = 'DiagnosticSignWarn', text = '' })
-sign({ name = 'DiagnosticSignHint', text = '' })
-sign({ name = 'DiagnosticSignInfo', text = '' })
+sign({ name = "DiagnosticSignError", text = "" })
+sign({ name = "DiagnosticSignWarn", text = "" })
+sign({ name = "DiagnosticSignHint", text = "" })
+sign({ name = "DiagnosticSignInfo", text = "" })
 
 vim.diagnostic.config({
-  virtual_text = true,
-  signs = true,
-  -- update_in_insert = true,
-  -- underline = false,
-  -- severity_sort = true,
-  -- float = {
-  --   border = 'single',
-  --   source = 'always',
-  --   header = '',
-  --   prefix = '- ',
-  -- },
+	virtual_text = true,
+	signs = true,
+	-- update_in_insert = true,
+	-- underline = false,
+	-- severity_sort = true,
+	-- float = {
+	--   border = 'single',
+	--   source = 'always',
+	--   header = '',
+	--   prefix = '- ',
+	-- },
 })
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = true,
-    signs = true,
-    update_in_insert = true,
-  }
-)
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+	virtual_text = true,
+	signs = true,
+	update_in_insert = true,
+})
 
 -- Fixed column for diagnostics to appear
 -- Show autodiagnostic popup on cursor hover_range
@@ -119,26 +116,26 @@ opt.history = 1000
 -- rhs (the commands or existing keybinds to customise)
 -- opts (additional options like <silent>/<noremap>, see :h map-arguments for more info on it)
 function map(mode, lhs, rhs, opts)
-  local options = { noremap = true }
-  if opts then
-    options = vim.tbl_extend("force", options, opts)
-  end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+	local options = { noremap = true }
+	if opts then
+		options = vim.tbl_extend("force", options, opts)
+	end
+	vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
 -- Window navigation
--- map("n", "<C-j>", "<C-w>j<C-w>")
--- map("n", "<C-h>", "<C-w>h<C-w>")
--- map("n", "<C-k>", "<C-w>k<C-w>")
--- map("n", "<C-l>", "<C-w>l<C-w>")
+map("n", "<C-j>", "<C-w>j<C-w>")
+map("n", "<C-h>", "<C-w>h<C-w>")
+map("n", "<C-k>", "<C-w>k<C-w>")
+map("n", "<C-l>", "<C-w>l<C-w>")
 
 -- Splits
-map('n', '<leader>v', '<cmd>vsp<cr>')
-map('i', '<leader>v', '<cmd>vsp<cr>')
-map('n', '<leader>s', '<cmd>sp<cr>')
-map('i', '<leader>s', '<cmd>sp<cr>')
-map('n', 'vv', '<cmd>vsp<cr>')
-map('n', 'ss', '<cmd>sp<cr>')
+map("n", "<leader>v", "<cmd>vsp<cr>")
+map("i", "<leader>v", "<cmd>vsp<cr>")
+map("n", "<leader>s", "<cmd>sp<cr>")
+map("i", "<leader>s", "<cmd>sp<cr>")
+map("n", "vv", "<cmd>vsp<cr>")
+map("n", "ss", "<cmd>sp<cr>")
 
 -- Save
 vim.cmd([[
@@ -156,7 +153,11 @@ map("n", "HL", ":HopLineStart<cr>")
 map("n", "<C-p>", ":lua require('telescope.builtin').find_files()<cr>")
 -- map("n", "<leader>fm", ":Telescope media_files<cr>")
 map("n", "<leader>fg", ":lua require('telescope.builtin').live_grep()<cr>")
-map("n", "<leader>b", ":lua require('telescope.builtin').buffers({ sort_lastused = true, ignore_current_buffer = true })<cr>")
+map(
+	"n",
+	"<leader>b",
+	":lua require('telescope.builtin').buffers({ sort_lastused = true, ignore_current_buffer = true })<cr>"
+)
 map("n", "<leader>fh", ":lua require('telescope.builtin').help_tags()<cr>")
 map("n", "<leader>fd", ":lua require('telescope.builtin').diagnostics()<cr>")
 map("n", "<leader>fs", ":lua require('telescope.builtin').lsp_workspace_symbols()<cr>")
@@ -180,29 +181,29 @@ map("n", "<leader>nt", ":NvimTreeToggle<CR>")
 
 -- Tagbar Toggle
 -- map('n', "<leader>tt", ":TagbarToggle<CR>");
-map('n', "<leader>tt", ":SymbolsOutline<CR>");
+map("n", "<leader>tt", ":SymbolsOutline<CR>")
 
+local lsp = require("lsp-zero")
 
-local lsp = require('lsp-zero')
-
-lsp.preset('recommended')
+lsp.preset("recommended")
 lsp.setup()
 
 -- -- LSP Navigation
 -- -- Code Actions
-map('n', "ca", ":lua vim.lsp.buf.code_action()<CR>")
+map("n", "ca", ":lua vim.lsp.buf.code_action()<CR>")
 vim.cmd([[
-nnoremap <silent> <c-]>     <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> <c-k>     <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> K         <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gi        <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> gc        <cmd>lua vim.lsp.buf.incoming_calls()<CR>
-nnoremap <silent> gd        <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr        <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> gn        <cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <silent> gs        <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gw        <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> ff        <cmd>lua vim.lsp.buf.format()<CR>
+nnoremap <silent> <c-]>      <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> <c-k>      <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> K          <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gi         <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> gc         <cmd>lua vim.lsp.buf.incoming_calls()<CR>
+nnoremap <silent> gd         <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr         <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> gn         <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> gs         <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gw         <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> ff         <cmd>lua vim.lsp.buf.format()<CR>
+nnoremap <silent> <leader>ff <cmd>lua vim.lsp.buf.format()<cr>
 ]])
 --
 vim.cmd([[
@@ -211,9 +212,12 @@ nnoremap <silent> g] <cmd>lua vim.diagnostic.goto_next()<CR>
 ]])
 
 -- Ruby lsp
-require 'lspconfig'.solargraph.setup {}
-require 'lspconfig'.sorbet.setup {}
-require 'lspconfig'.sumneko_lua.setup {}
+require("lspconfig").solargraph.setup({})
+require("lspconfig").sorbet.setup({})
+require("lspconfig").sumneko_lua.setup({})
+require("lspconfig").marksman.setup({})
+require("lspconfig").gopls.setup({})
+
 --require'lspconfig'.typeprof.setup{}
 
 -- Crates Nvim
@@ -237,83 +241,81 @@ require 'lspconfig'.sumneko_lua.setup {}
 --
 -- Comment.nvim configuration
 -- current line
-vim.keymap.set('n', '<C-_>', '<Plug>(comment_toggle_linewise_current)')
+vim.keymap.set("n", "<C-_>", "<Plug>(comment_toggle_linewise_current)")
 -- vim.keymap.set('n', 'cb', '<Plug>(comment_toggle_blockwise_current)')
 
 -- Toggle in VISUAL mode
-vim.keymap.set('x', '<C-_>', '<Plug>(comment_toggle_linewise_visual)')
+vim.keymap.set("x", "<C-_>", "<Plug>(comment_toggle_linewise_visual)")
 -- vim.keymap.set('x', 'cb', '<Plug>(comment_toggle_blockwise_visual)')
 
-
 -- Lua line
-require('lualine').setup {
-  options = {
-    theme = 'solarized',
-    fmt = string.lower,
-    component_separators = { left = '', right = '' },
-    section_separators = { left = '', right = '' },
-  }
-}
+require("lualine").setup({
+	options = {
+		theme = "solarized",
+		fmt = string.lower,
+		component_separators = { left = "", right = "" },
+		section_separators = { left = "", right = "" },
+	},
+})
 
 -- Symbols Outline (new tagbar)
-require("symbols-outline").setup {
-  show_guides = false,
-  position = 'left',
-  width = 35,
-  wrap = false,
-  keymaps = { fold = "h", unfold = "l", fold_all = "zM", unfold_all = "zR" },
-  symbols = {
-    File = { icon = "", hl = "TSURI" },
-    Module = { icon = "全", hl = "TSNamespace" },
-    Namespace = { icon = "凜", hl = "TSNamespace" },
-    Package = { icon = "", hl = "TSNamespace" },
-    Class = { icon = "", hl = "TSType" },
-    Method = { icon = "", hl = "TSMethod" },
-    Property = { icon = "", hl = "TSMethod" },
-    Field = { icon = "", hl = "TSField" },
-    Constructor = { icon = "", hl = "TSConstructor" },
-    Enum = { icon = "", hl = "TSType" },
-    Interface = { icon = "ﰮ", hl = "TSType" },
-    Function = { icon = "", hl = "TSFunction" },
-    Variable = { icon = "", hl = "TSConstant" },
-    Constant = { icon = "", hl = "TSConstant" },
-    String = { icon = "", hl = "TSString" },
-    Number = { icon = "#", hl = "TSNumber" },
-    Boolean = { icon = "⊨", hl = "TSBoolean" },
-    Array = { icon = "", hl = "TSConstant" },
-    Object = { icon = "", hl = "TSType" },
-    Key = { icon = "🔐", hl = "TSType" },
-    Null = { icon = "ﳠ", hl = "TSType" },
-    EnumMember = { icon = "", hl = "TSField" },
-    Struct = { icon = "", hl = "TSType" },
-    Event = { icon = "🗲", hl = "TSType" },
-    Operator = { icon = "+", hl = "TSOperator" },
-    TypeParameter = { icon = "", hl = "TSParameter" }
-  },
-}
+require("symbols-outline").setup({
+	show_guides = false,
+	position = "left",
+	width = 35,
+	wrap = false,
+	keymaps = { fold = "h", unfold = "l", fold_all = "zM", unfold_all = "zR" },
+	symbols = {
+		File = { icon = "", hl = "TSURI" },
+		Module = { icon = "全", hl = "TSNamespace" },
+		Namespace = { icon = "凜", hl = "TSNamespace" },
+		Package = { icon = "", hl = "TSNamespace" },
+		Class = { icon = "", hl = "TSType" },
+		Method = { icon = "", hl = "TSMethod" },
+		Property = { icon = "", hl = "TSMethod" },
+		Field = { icon = "", hl = "TSField" },
+		Constructor = { icon = "", hl = "TSConstructor" },
+		Enum = { icon = "", hl = "TSType" },
+		Interface = { icon = "ﰮ", hl = "TSType" },
+		Function = { icon = "", hl = "TSFunction" },
+		Variable = { icon = "", hl = "TSConstant" },
+		Constant = { icon = "", hl = "TSConstant" },
+		String = { icon = "", hl = "TSString" },
+		Number = { icon = "#", hl = "TSNumber" },
+		Boolean = { icon = "⊨", hl = "TSBoolean" },
+		Array = { icon = "", hl = "TSConstant" },
+		Object = { icon = "", hl = "TSType" },
+		Key = { icon = "🔐", hl = "TSType" },
+		Null = { icon = "ﳠ", hl = "TSType" },
+		EnumMember = { icon = "", hl = "TSField" },
+		Struct = { icon = "", hl = "TSType" },
+		Event = { icon = "🗲", hl = "TSType" },
+		Operator = { icon = "+", hl = "TSOperator" },
+		TypeParameter = { icon = "", hl = "TSParameter" },
+	},
+})
 
 -- Better escape
-require("better_escape").setup {
-  mapping = { "jk", "kj" }, -- a table with mappings to use
-  timeout = vim.o.timeoutlen, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
-  clear_empty_lines = false, -- clear line after escaping if there is only whitespace
-  keys = "<Esc>", -- keys used for escaping, if it is a function will use the result everytime
-}
-
+require("better_escape").setup({
+	mapping = { "jk", "kj" }, -- a table with mappings to use
+	timeout = vim.o.timeoutlen, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
+	clear_empty_lines = false, -- clear line after escaping if there is only whitespace
+	keys = "<Esc>", -- keys used for escaping, if it is a function will use the result everytime
+})
 
 -- Fidget - show status of LSP progress
-require "fidget".setup {
-  window = {
-    relative = "editor",
-    blend = 10,
-  },
-}
+require("fidget").setup({
+	window = {
+		relative = "editor",
+		blend = 10,
+	},
+})
 
 -- Hop
-require 'hop'.setup {
-  keys = 'etovxqpdygfblzhckisuran',
-  jump_on_sole_occurrence = false,
-}
+require("hop").setup({
+	keys = "etovxqpdygfblzhckisuran",
+	jump_on_sole_occurrence = false,
+})
 
 -- -- Ident Lines
 -- vim.cmd [[highlight IndentBlanklineIndent1 guifg=#2d3033 gui=nocombine]]
@@ -339,353 +341,409 @@ require 'hop'.setup {
 -- }
 
 -- Trouble Setup
-require('trouble').setup {
-  position = "right",
-  width = 75,
-  padding = true,
-  auto_preview = false,
-}
+require("trouble").setup({
+	position = "right",
+	width = 75,
+	padding = true,
+	auto_preview = false,
+})
 
 -- Nvim Tree Setup
-require('nvim-tree').setup {
-  sort_by = "case_sensitive",
-  view = {
-    adaptive_size = false,
-    mappings = {
-      list = {
-        { key = "u", action = "dir_up" },
-      },
-    },
-  },
-  renderer = {
-    group_empty = true,
-    icons = {
-      git_placement = "after",
-      glyphs = {
-        git = {
-          unstaged = "-",
-          staged = "s",
-          untracked = "u",
-          renamed = "r",
-          deleted = "d",
-          ignored = "i",
-        },
-      },
-    },
-  },
-  filters = {
-    dotfiles = false,
-  },
-  git = {
-    ignore = false,
-  },
-}
+require("nvim-tree").setup({
+	sort_by = "case_sensitive",
+	view = {
+		adaptive_size = false,
+		mappings = {
+			list = {
+				{ key = "u", action = "dir_up" },
+			},
+		},
+	},
+	renderer = {
+		group_empty = true,
+		icons = {
+			git_placement = "after",
+			glyphs = {
+				git = {
+					unstaged = "-",
+					staged = "s",
+					untracked = "u",
+					renamed = "r",
+					deleted = "d",
+					ignored = "i",
+				},
+			},
+		},
+	},
+	filters = {
+		dotfiles = false,
+	},
+	git = {
+		ignore = false,
+	},
+})
 
 -- Telescope Setup
-require('telescope').setup {
-  defaults = {
-    file_ignore_patterns = {
-      "^./.git/",
-      "^./target/",
-      "LICENSE*"
-    },
-    layout_strategy = 'vertical',
-    layout_config = { height = 0.95, width = 0.95 },
-  },
-  extensions = {
-    media_files = {
-      -- filetypes whitelist
-      -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
-      filetypes = { "png", "webp", "jpg", "jpeg", "ppm", "pdf" },
-      find_cmd = "rg", -- find command (defaults to `fd`)
-    },
-  },
-}
+require("telescope").setup({
+	defaults = {
+		file_ignore_patterns = {
+			"^./.git/",
+			"^./target/",
+			"LICENSE*",
+		},
+		layout_strategy = "vertical",
+		layout_config = { height = 0.95, width = 0.95 },
+	},
+	extensions = {
+		media_files = {
+			-- filetypes whitelist
+			-- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
+			filetypes = { "png", "webp", "jpg", "jpeg", "ppm", "pdf" },
+			find_cmd = "rg", -- find command (defaults to `fd`)
+		},
+	},
+})
 -- load extension to support preview of media files
 -- require('telescope').load_extension('media_files');
 -- Get fzf loaded and working with extension
-require('telescope').load_extension('fzf')
+require("telescope").load_extension("fzf")
 
 -- Autopairs Setup
-require 'nvim-autopairs'.setup {}
+require("nvim-autopairs").setup({})
 
 -- Mason Setup
 require("mason").setup({
-  ui = {
-    icons = {
-      package_installed = "",
-      package_pending = "",
-      package_uninstalled = "",
-    },
-  }
+	ui = {
+		icons = {
+			package_installed = "",
+			package_pending = "",
+			package_uninstalled = "",
+		},
+	},
 })
 require("mason-lspconfig").setup()
 
 -- Comment Setup
-require('Comment').setup({
-  mappings = {
-    basic = false,
-    extra = false,
-    extended = false,
-  },
+require("Comment").setup({
+	mappings = {
+		basic = false,
+		extra = false,
+		extended = false,
+	},
 })
 
 -- Crates Nvim
-require('crates').setup({
-
-})
+require("crates").setup({})
 
 -- LSP Config
-local nvim_lsp = require 'lspconfig'
+local nvim_lsp = require("lspconfig")
 
 -- Completion
 
-require('lspkind').init({
-  -- mode = 'symbol_text'
+require("lspkind").init({
+	-- mode = 'symbol_text'
 })
 
-
-vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
+vim.opt.completeopt = { "menuone", "noselect", "noinsert" }
 vim.opt.shortmess = vim.opt.shortmess + { c = true }
-vim.api.nvim_set_option('updatetime', 350)
+vim.api.nvim_set_option("updatetime", 350)
 
-local lspkind = require('lspkind')
-local cmp = require 'cmp'
+local lspkind = require("lspkind")
+local cmp = require("cmp")
 local luasnip = require("luasnip")
 
 local has_words_before = function()
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
--- cmp.setup({
---   -- Enable LSP snippets
---   snippet = {
---     expand = function(args)
---       -- vim.fn["vsnip#anonymous"](args.body) -- For 'vsnip' users.
---       require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
---     end,
---   },
---   mapping = {
---     -- Add tab support
---     ["<Tab>"] = cmp.mapping(function(fallback)
---       if cmp.visible() then
---         cmp.select_next_item()
---       elseif luasnip.expand_or_jumpable() then
---         luasnip.expand_or_jump()
---       elseif has_words_before() then
---         cmp.complete()
---       else
---         fallback()
---       end
---     end, { "i", "s" }),
---
---     ["<S-Tab>"] = cmp.mapping(function(fallback)
---       if cmp.visible() then
---         cmp.select_prev_item()
---       elseif luasnip.jumpable(-1) then
---         luasnip.jump(-1)
---       else
---         fallback()
---       end
---     end, { "i", "s" }),
---     ['<C-w>'] = cmp.mapping.scroll_docs(-4),
---     ['<C-f>'] = cmp.mapping.scroll_docs(4),
---     ['<C-Space>'] = cmp.mapping.complete(),
---     ['<C-e>'] = cmp.mapping.close(),
---     ['<CR>'] = cmp.mapping.confirm { select = false }
---   },
---   -- Installed sources:
---   sources = {
---     { name = 'path' }, -- file paths
---     { name = 'nvim_lsp', keyword_length = 1, priority = 10 }, -- from language server
---     { name = 'crates', keyword_length = 1, priority = 10 },
---     { name = 'luasnip', keyword_length = 1, priority = 7 }, -- for lua users
---     { name = 'nvim_lsp_signature_help', priority = 8 }, -- display function signatures with current parameter emphasized
---     { name = 'nvim_lua', keyword_length = 1, priority = 8 }, -- complete neovim's Lua runtime API such vim.lsp.*
---     { name = 'buffer', keyword_length = 1, priority = 5 }, -- source current buffer
---     -- { name = 'vsnip', keyword_length = 2 },         -- nvim-cmp source for vim-vsnip
---     { name = 'calc' }, -- source for math calculation
---   },
---   window = {
---     completion = {
---       cmp.config.window.bordered(),
---       col_offset = 3,
---       side_padding = 1,
---     },
---     documentation = cmp.config.window.bordered(),
---
---   },
---   formatting = {
---     fields = { 'menu', 'abbr', 'kind' },
---     format = lspkind.cmp_format({
---       mode = 'symbol_text', -- show only symbol annotations
---       maxwidth = 60, -- prevent the popup from showing more than provided characters
---       -- The function below will be called before any actual modifications from lspkind:
---       before = function(entry, vim_item)
---         local menu_icon = {
---           nvim_lsp = 'λ ',
---           luasnip = '⋗ ',
---           buffer = 'Ω ',
---           path = '🖫 ',
---         }
---         vim_item.menu = menu_icon[entry.source.name]
---         return vim_item
---       end,
---     })
---
---   },
---   preselect = cmp.PreselectMode.None,
---   confirmation = {
---     get_commit_characters = function(commit_characters)
---       return {}
---     end
---   },
--- })
---
--- -- `/` cmdline setup.
--- cmp.setup.cmdline('/', {
---   mapping = cmp.mapping.preset.cmdline(),
---   sources = {
---     { name = 'buffer' }
---   }
--- })
--- -- `:` cmdline setup.
--- cmp.setup.cmdline(':', {
---   mapping = cmp.mapping.preset.cmdline(),
---   sources = cmp.config.sources({
---     { name = 'path' }
---   }, {
---     { name = 'cmdline' }
---   })
--- })
---
---
--- local capabilities = require('cmp_nvim_lsp').default_capabilities()
--- -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
--- require('lspconfig')['rust_analyzer'].setup {
---   capabilities = capabilities
--- }
+cmp.setup({
+	-- Enable LSP snippets
+	snippet = {
+		expand = function(args)
+			-- vim.fn["vsnip#anonymous"](args.body) -- For 'vsnip' users.
+			require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
+		end,
+	},
+	mapping = {
+		-- Add tab support
+		["<Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			elseif luasnip.expand_or_jumpable() then
+				luasnip.expand_or_jump()
+			elseif has_words_before() then
+				cmp.complete()
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
 
+		["<S-Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item()
+			elseif luasnip.jumpable(-1) then
+				luasnip.jump(-1)
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+		["<C-w>"] = cmp.mapping.scroll_docs(-4),
+		["<C-f>"] = cmp.mapping.scroll_docs(4),
+		["<C-Space>"] = cmp.mapping.complete(),
+		["<C-e>"] = cmp.mapping.close(),
+		["<CR>"] = cmp.mapping.confirm({ select = false }),
+	},
+	-- Installed sources:
+	sources = {
+		{ name = "path" }, -- file paths
+		{ name = "nvim_lsp", keyword_length = 1, priority = 10 }, -- from language server
+		{ name = "crates", keyword_length = 1, priority = 10 },
+		{ name = "luasnip", keyword_length = 1, priority = 7 }, -- for lua users
+		{ name = "nvim_lsp_signature_help", priority = 8 }, -- display function signatures with current parameter emphasized
+		{ name = "nvim_lua", keyword_length = 1, priority = 8 }, -- complete neovim's Lua runtime API such vim.lsp.*
+		{ name = "buffer", keyword_length = 1, priority = 5 }, -- source current buffer
+		-- { name = 'vsnip', keyword_length = 2 },         -- nvim-cmp source for vim-vsnip
+		{ name = "calc" }, -- source for math calculation
+	},
+	window = {
+		completion = {
+			cmp.config.window.bordered(),
+			col_offset = 3,
+			side_padding = 1,
+		},
+		documentation = cmp.config.window.bordered(),
+	},
+	formatting = {
+		fields = { "menu", "abbr", "kind" },
+		format = lspkind.cmp_format({
+			mode = "symbol_text", -- show only symbol annotations
+			maxwidth = 60, -- prevent the popup from showing more than provided characters
+			-- The function below will be called before any actual modifications from lspkind:
+			before = function(entry, vim_item)
+				local menu_icon = {
+					nvim_lsp = "λ ",
+					luasnip = "⋗ ",
+					buffer = "Ω ",
+					path = "🖫 ",
+				}
+				vim_item.menu = menu_icon[entry.source.name]
+				return vim_item
+			end,
+		}),
+	},
+	preselect = cmp.PreselectMode.None,
+	confirmation = {
+		get_commit_characters = function(commit_characters)
+			return {}
+		end,
+	},
+})
 
+-- `/` cmdline setup.
+cmp.setup.cmdline("/", {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = {
+		{ name = "buffer" },
+	},
+})
+-- `:` cmdline setup.
+cmp.setup.cmdline(":", {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = cmp.config.sources({
+		{ name = "path" },
+	}, {
+		{ name = "cmdline" },
+	}),
+})
+
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+-- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+require("lspconfig")["rust_analyzer"].setup({
+	capabilities = capabilities,
+})
 
 -- treesitter
 
-require'nvim-treesitter.configs'.setup {
-  -- A list of parser names, or "all"
-  ensure_installed = { "c", "lua", "rust", "ruby", "typescript" , "help", "javascript", "sql"},
+require("nvim-treesitter.configs").setup({
+	-- A list of parser names, or "all"
+	ensure_installed = { "c", "lua", "rust", "golang", "ruby", "typescript", "help", "javascript", "sql" },
 
-  -- Install parsers synchronously (only applied to `ensure_installed`)
-  sync_install = false,
+	-- Install parsers synchronously (only applied to `ensure_installed`)
+	sync_install = false,
 
-  -- Automatically install missing parsers when entering buffer
-  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-  auto_install = true,
+	-- Automatically install missing parsers when entering buffer
+	-- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+	auto_install = true,
 
+	highlight = {
+		enable = true,
 
-  highlight = {
-    enable = true,
-
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-}
+		-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+		-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+		-- Using this option may slow down your editor, and you may see some duplicate highlights.
+		-- Instead of true it can also be a list of languages
+		additional_vim_regex_highlighting = false,
+	},
+})
 
 -- dap
 
-local dap = require('dap')
+local dap = require("dap")
 dap.defaults.fallback.terminal_win_cmd = "50vsplit new"
 
-require("nvim-dap-virtual-text").setup {
-  commented = true,
-}
+require("nvim-dap-virtual-text").setup({
+	commented = true,
+})
 
-local dap, dapui = require "dap", require "dapui"
-dapui.setup {} -- use default
+local dap, dapui = require("dap"), require("dapui")
+dapui.setup({}) -- use default
 dap.listeners.after.event_initialized["dapui_config"] = function()
-  dapui.open()
+	dapui.open()
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
-  dapui.close()
+	dapui.close()
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
-  dapui.close()
+	dapui.close()
 end
 
-
+-- DAP, Debugger
+vim.keymap.set("n", "<leader>db", "<Cmd>lua require('dap').toggle_breakpoint()<CR>")
+vim.keymap.set("n", "<leader>dc", "<Cmd>lua require('dap').continue()<CR>")
+vim.keymap.set("n", "<leader>do", "<Cmd>lua require('dap').step_over()<CR>")
+vim.keymap.set("n", "<leader>di", "<Cmd>lua require('dap').step_into()<CR>")
+vim.keymap.set("n", "<leader>dso", "<Cmd>lua require('dap').step_over()<CR>")
+vim.keymap.set("n", "<leader>dr", "<Cmd>lua require('dap').repl.open()<CR>")
 
 -- RUST
 -- -------------------------------------
 local rt = require("rust-tools")
 
-local extension_path = vim.env.HOME
-    .. "/.vscode/extensions/vadimcn.vscode-lldb-1.8.1/"
-local codelldb_path = extension_path .. "adapter/codelldb"
-local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
+local mason_path = vim.fn.glob(vim.fn.stdpath("data") .. "/mason/packages/codelldb/extension/")
+local vscode_path = vim.fn.expand("~/") .. ".vscode/extensions/vadimcn.vscode-lldb-1.9.2/"
+
+local dir_exists = function(file)
+	local ok, _, code = os.rename(file, file)
+	if not ok then
+		if code == 13 then
+			-- Permission denied, but it exists
+			return true
+		end
+	end
+	return ok
+end
+
+local opts = {}
+
+local path = ""
+local debugger_found = true
+if dir_exists(mason_path) then
+	path = mason_path
+elseif dir_exists(vscode_path) then
+	path = vscode_path
+else
+	debugger_found = false
+	vim.notify("please install codelldb using :Mason or via vscode", vim.log.levels.WARN)
+end
+
+if debugger_found then
+	local codelldb_path = path .. "adapter/codelldb"
+	local liblldb_path = path .. "lldb/lib/liblldb.so"
+
+	if vim.fn.has("mac") == 1 then
+		liblldb_path = path .. "lldb/lib/liblldb.dylib"
+	end
+
+	if vim.fn.filereadable(codelldb_path) and vim.fn.filereadable(liblldb_path) then
+		opts.dap = {
+			adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+		}
+	else
+		vim.notify("please reinstall codellb, i cannot find liblldb or codelldb itself", vim.log.levels.WARN)
+	end
+end
 
 rt.setup({
-  server = {
-    on_attach = function(_, bufnr)
-      -- Hover actions
-      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-      -- Code action groups
-      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-    end,
-  },
-  dap = {
-    adapter = require("rust-tools.dap").get_codelldb_adapter(
-      codelldb_path,
-      liblldb_path
-    ),
-  },
+	server = {
+		on_attach = function(_, bufnr)
+			-- Hover actions
+			vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+			-- Code action groups
+			vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+		end,
+	},
+	dap = opts.dap,
 })
 
 dap.set_log_level("TRACE")
 
 dap.adapters.ruby = function(callback, config)
-  callback {
-    type = "server",
-    host = "127.0.0.1",
-    port = "${port}",
-    executable = {
-      command = "bundle",
-      args = { "exec", "rdbg", "-n", "--open", "--port", "${port}",
-        "-c", "--", "bundle", "exec", config.command, config.script,
-      },
-    },
-  }
+	callback({
+		type = "server",
+		host = "127.0.0.1",
+		port = "${port}",
+		executable = {
+			command = "bundle",
+			args = {
+				"exec",
+				"rdbg",
+				"-n",
+				"--open",
+				"--port",
+				"${port}",
+				"-c",
+				"--",
+				"bundle",
+				"exec",
+				config.command,
+				config.script,
+			},
+		},
+	})
 end
 
-dap.configurations.ruby = {
-  {
-    type = "ruby",
-    name = "debug current file",
-    request = "attach",
-    localfs = true,
-    command = "ruby",
-    script = "${file}",
-  },
-  {
-    type = "ruby",
-    name = "run current spec file",
-    request = "attach",
-    localfs = true,
-    command = "rspec",
-    script = "${file}",
-  },
-  {
-    type = "ruby",
-    name = "run rails",
-    request = "attach",
-    localfs = true,
-    command = "rails s",
-    script = "",
-  },
+dap.adapters.lldb = dap.adapters.rt_lldb
+
+dap.configurations.rust = {
+	-- {
+	--   type = "rt_lldb",
+	--   name = "stdb standalone",
+	--   request = "launch",
+	--   localfs = true,
+	--   program = "target/debug/spacetimedb",
+	--   args = {"start -l 127.0.0.1:3000"},
+	--   stopOnEntry = false,
+	--   runInTerminal = true
+	-- }
 }
 
+dap.configurations.ruby = {
+	{
+		type = "ruby",
+		name = "debug current file",
+		request = "attach",
+		localfs = true,
+		command = "ruby",
+		script = "${file}",
+	},
+	{
+		type = "ruby",
+		name = "run current spec file",
+		request = "attach",
+		localfs = true,
+		command = "rspec",
+		script = "${file}",
+	},
+	{
+		type = "ruby",
+		name = "run rails",
+		request = "attach",
+		localfs = true,
+		command = "rails s",
+		script = "",
+	},
+}
 
 -- spectre
 vim.cmd([[
@@ -702,17 +760,17 @@ nnoremap <leader>sp viw:lua require('spectre').open_file_search()<cr>
 require("luasnip.loaders.from_vscode").lazy_load()
 
 require("neotest").setup({
-  adapters = {
-    require("neotest-python"),
-    require('neotest-rspec'),
-    require('neotest-rust'),
-    require('neotest-elixir'),
-  }
+	adapters = {
+		require("neotest-python"),
+		require("neotest-rspec"),
+		require("neotest-rust"),
+		require("neotest-elixir"),
+	},
 })
 
-require "lsp_signature".setup({
-  bind = true, -- This is mandatory, otherwise border config won't get registered.
-  handler_opts = {
-    border = "rounded"
-  }
+require("lsp_signature").setup({
+	bind = true, -- This is mandatory, otherwise border config won't get registered.
+	handler_opts = {
+		border = "rounded",
+	},
 })
