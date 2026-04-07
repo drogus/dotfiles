@@ -9,3 +9,5 @@ ln -sf $SCRIPT_DIR/zsh $HOME/.zsh
 rm -fr $HOME/.zshrc
 ln -sf $SCRIPT_DIR/zshrc $HOME/.zshrc
 ln -sf $SCRIPT_DIR/tmux.conf $HOME/.tmux.conf
+mkdir -p ~/.config/alacritty
+ln -sf $SCRIPT_DIR/alacritty.toml $HOME/.config/alacritty/alacritty.toml
