@@ -68,3 +68,7 @@ setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY
 
 export GPG_TTY=$(tty)
+
+export PATH=$PATH:/opt/homebrew/Cellar/postgresql@15/15.4/bin/
+
+unalias history
