@@ -10,6 +10,8 @@
 ## ttyctl -f is supposed to achieve what alias above does, but I can't make it
 ## work
 #
+#
+export PATH="$PATH:$HOME/.local/bin"
 
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
@@ -18,11 +20,13 @@ bindkey -e
 
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
-if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-    ssh-agent > ~/.ssh-agent-thing
-fi
-if [[ "$SSH_AGENT_PID" == "" ]]; then
-    eval "$(<~/.ssh-agent-thing)"
+if [[ -z "${SSH_AUTH_SOCK:-}" || ! -S "${SSH_AUTH_SOCK}" ]]; then
+    if ! pgrep -u "$(id -u)" ssh-agent > /dev/null; then
+        ssh-agent > ~/.ssh-agent-thing
+    fi
+    if [[ -z "${SSH_AGENT_PID:-}" && -f ~/.ssh-agent-thing ]]; then
+        eval "$(<~/.ssh-agent-thing)"
+    fi
 fi
 
 #source "${HOME}/.zgen/zgen.zsh"
@@ -37,7 +41,9 @@ antigen bundle docker
 antigen bundle docker-compose
 antigen bundle command-not-found
 antigen bundle jhipster
-antigen bundle bobsoppe/zsh-ssh-agent
+if [[ -z "${SSH_AUTH_SOCK:-}" || ! -S "${SSH_AUTH_SOCK}" ]]; then
+    antigen bundle bobsoppe/zsh-ssh-agent
+fi
 
 antigen theme amuse
 
@@ -72,3 +78,4 @@ export GPG_TTY=$(tty)
 export PATH=$PATH:/opt/homebrew/Cellar/postgresql@15/15.4/bin/
 
 unalias history
+eval "$(mise activate zsh)"
